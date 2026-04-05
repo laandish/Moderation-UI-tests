@@ -2,6 +2,7 @@ package advertisements
 
 import (
 	"fmt"
+	"strings"
 
 	clientAds "api-tests-template/internal/client/http/advertisements"
 	"api-tests-template/internal/client/http/common"
@@ -17,19 +18,35 @@ func NewManager(baseURL string) *Manager {
 	}
 }
 
+func ExtractItemIDFromStatus(status string) string {
+	parts := strings.Split(status, " - ")
+	if len(parts) < 2 {
+		return ""
+	}
+	return strings.TrimSpace(parts[len(parts)-1])
+}
+
 func (m *Manager) CreateItem(request clientAds.CreateItemRequest) (*CreateItemResult, int, error) {
 	resp, err := m.client.CreateItem(request)
 	if err != nil {
 		return nil, 0, fmt.Errorf("create item request failed: %w", err)
 	}
 
-	decoded, err := common.Decode[clientAds.ItemResponse](resp)
+	fmt.Printf("CREATE STATUS: %d\n", resp.StatusCode)
+	fmt.Printf("CREATE BODY: %s\n", string(resp.Body))
+
+	if resp.StatusCode != 200 {
+		return nil, resp.StatusCode, nil
+	}
+
+	decoded, err := common.Decode[clientAds.CreateItemResponse](resp)
 	if err != nil {
 		return nil, resp.StatusCode, fmt.Errorf("failed to decode create item response: %w", err)
 	}
 
 	return &CreateItemResult{
 		Response: decoded,
+		ItemID:   ExtractItemIDFromStatus(decoded.Status),
 	}, resp.StatusCode, nil
 }
 

@@ -13,6 +13,10 @@ type CreateItemRequest struct {
 	Statistics Statistics `json:"statistics"`
 }
 
+type CreateItemResponse struct {
+	Status string `json:"status"`
+}
+
 type ItemResponse struct {
 	ID         string     `json:"id"`
 	SellerID   int        `json:"sellerId"`

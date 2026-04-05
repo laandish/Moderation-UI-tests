@@ -3,7 +3,8 @@ package advertisements
 import clientAds "api-tests-template/internal/client/http/advertisements"
 
 type CreateItemResult struct {
-	Response *clientAds.ItemResponse
+	Response *clientAds.CreateItemResponse
+	ItemID   string
 }
 
 type GetItemResult struct {

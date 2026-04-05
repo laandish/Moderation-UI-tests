@@ -26,9 +26,9 @@ func RandomPrice() int {
 
 func RandomStatistics() clientAds.Statistics {
 	return clientAds.Statistics{
-		Likes:     rand.Intn(1000),
-		ViewCount: rand.Intn(10000),
-		Contacts:  rand.Intn(500),
+		Likes:     1 + rand.Intn(1000),
+		ViewCount: 1 + rand.Intn(10000),
+		Contacts:  1 + rand.Intn(500),
 	}
 }
 
