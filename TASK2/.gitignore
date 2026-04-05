@@ -10,5 +10,4 @@
 # vendoring cache directory
 .cache
 
-# Go workspace files
-.env.override
+

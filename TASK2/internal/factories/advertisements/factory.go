@@ -8,12 +8,10 @@ import (
 	clientAds "api-tests-template/internal/client/http/advertisements"
 )
 
-func init() {	
-	rand.Seed(time.Now().UnixNano())
-}
+var rnd = rand.New(rand.NewSource(time.Now().UnixNano())) //nolint:gosec
 
 func RandomSellerID() int {
-	return 111111 + rand.Intn(999999-111111+1)
+	return 111111 + rnd.Intn(999999-111111+1)
 }
 
 func RandomName() string {
@@ -21,14 +19,14 @@ func RandomName() string {
 }
 
 func RandomPrice() int {
-	return 1 + rand.Intn(100000)
+	return 1 + rnd.Intn(100000)
 }
 
 func RandomStatistics() clientAds.Statistics {
 	return clientAds.Statistics{
-		Likes:     1 + rand.Intn(1000),
-		ViewCount: 1 + rand.Intn(10000),
-		Contacts:  1 + rand.Intn(500),
+		Likes:     1 + rnd.Intn(1000),
+		ViewCount: 1 + rnd.Intn(10000),
+		Contacts:  1 + rnd.Intn(500),
 	}
 }
 
